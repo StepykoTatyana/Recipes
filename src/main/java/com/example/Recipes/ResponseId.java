@@ -1,9 +1,9 @@
 package com.example.Recipes;
 
 public class ResponseId {
-    private int id;
+    private long id;
 
-    public ResponseId(int id) {
+    public ResponseId(long id) {
         this.id = id;
     }
 
@@ -11,11 +11,11 @@ public class ResponseId {
 
     }
 
-    public int getId() {
+    public long getId() {
         return id;
     }
 
-    public void setId(int id) {
+    public void setId(long id) {
         this.id = id;
     }
 }
