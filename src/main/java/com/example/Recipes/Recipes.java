@@ -1,17 +1,16 @@
 package com.example.Recipes;
 
 import com.sun.istack.NotNull;
-import org.hibernate.annotations.Type;
-import org.hibernate.type.StringNVarcharType;
+import org.springframework.format.annotation.DateTimeFormat;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.Size;
+import java.time.LocalDateTime;
 import java.util.List;
 
 @Entity
-@Table
 public class Recipes {
     @Id
     @Column
@@ -26,13 +25,27 @@ public class Recipes {
     @NotNull
     @NotEmpty
     @NotBlank
+    private String category;
+
+
+    @Column
+    @DateTimeFormat
+    private LocalDateTime date;
+
+    @Column
+    @NotNull
+    @NotEmpty
+    @NotBlank
     private String description;
+
+
     @NotNull
     @NotEmpty
     @ElementCollection
     @CollectionTable(name = "INGREDIENTS", joinColumns = @JoinColumn(name = "recipe_id"))
     @Column(name = "ingredients")
     @Size(min = 1)
+    @OrderColumn
     private List<String> ingredients;
     @NotNull
     @NotEmpty
@@ -40,8 +53,25 @@ public class Recipes {
     @CollectionTable(name = "DIRECTIONS", joinColumns = @JoinColumn(name = "recipe_id"))
     @Column(name = "directions")
     @Size(min = 1)
+    @OrderColumn
     private List<String> directions;
 
+
+    public LocalDateTime getDate() {
+        return date;
+    }
+
+    public void setDate(LocalDateTime date) {
+        this.date = date;
+    }
+
+    public String getCategory() {
+        return category;
+    }
+
+    public void setCategory(String category) {
+        this.category = category;
+    }
 
     public String getName() {
         return name;
@@ -78,10 +108,14 @@ public class Recipes {
     public Recipes() {
     }
 
-    public Recipes(String name, String description, List<String> ingredients, List<String> directions) {
+    public Recipes(String name, String description, String category, LocalDateTime date, List<String> ingredients, List<String> directions) {
         this.name = name;
         this.description = description;
+        this.category = category;
+        this.date = date;
         this.ingredients = ingredients;
         this.directions = directions;
     }
 }
+
+
