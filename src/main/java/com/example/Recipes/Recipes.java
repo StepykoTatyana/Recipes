@@ -1,9 +1,11 @@
 package com.example.Recipes;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.sun.istack.NotNull;
 import org.springframework.format.annotation.DateTimeFormat;
 
 import javax.persistence.*;
+import javax.validation.constraints.Email;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.Size;
@@ -14,7 +16,8 @@ import java.util.List;
 public class Recipes {
     @Id
     @Column
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @JsonIgnore
     private Long id;
     @Column
     @NotNull
@@ -47,6 +50,8 @@ public class Recipes {
     @Size(min = 1)
     @OrderColumn
     private List<String> ingredients;
+
+
     @NotNull
     @NotEmpty
     @ElementCollection
@@ -56,6 +61,25 @@ public class Recipes {
     @OrderColumn
     private List<String> directions;
 
+    @Column
+    @JsonIgnore
+    private String email;
+
+    public Long getId() {
+        return id;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
+    }
+
+    public String getEmail() {
+        return email;
+    }
+
+    public void setEmail(String email) {
+        this.email = email;
+    }
 
     public LocalDateTime getDate() {
         return date;
@@ -108,13 +132,14 @@ public class Recipes {
     public Recipes() {
     }
 
-    public Recipes(String name, String description, String category, LocalDateTime date, List<String> ingredients, List<String> directions) {
+    public Recipes(String name, String description, String category, LocalDateTime date, List<String> ingredients, List<String> directions, String email) {
         this.name = name;
         this.description = description;
         this.category = category;
         this.date = date;
         this.ingredients = ingredients;
         this.directions = directions;
+        this.email = email;
     }
 }
 

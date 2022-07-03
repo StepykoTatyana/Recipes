@@ -35,7 +35,7 @@ public class RecipesService {
             Recipes recipes = repository.findById(id).get();
             return new ResponseEntity<>(new Recipes(recipes.getName(), recipes.getDescription(),
                     recipes.getCategory(), recipes.getDate(),
-                    recipes.getIngredients(), recipes.getDirections()), HttpStatus.OK);
+                    recipes.getIngredients(), recipes.getDirections(), recipes.getEmail()), HttpStatus.OK);
         } catch (Exception e) {
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         }
@@ -49,7 +49,8 @@ public class RecipesService {
                 recipes.getCategory(),
                 recipes.getDate(),
                 recipes.getIngredients(),
-                recipes.getDirections());
+                recipes.getDirections(),
+                recipes.getEmail());
 
 
     }
@@ -60,11 +61,9 @@ public class RecipesService {
 
 
     public void saveToRepository(String name, String description, String category, LocalDateTime date,
-                                 List<String> ingredients, List<String> directions) {
-        repository.save(new Recipes(name, description, category, date, ingredients, directions));
+                                 List<String> ingredients, List<String> directions, String email) {
+        repository.save(new Recipes(name, description, category, date, ingredients, directions, email));
     }
-
-
 
 
 }
