@@ -29,7 +29,8 @@ public class RecipesController {
     }
 
     @PostMapping("/api/recipe/new")
-    public Map<String, Long> postRecipes(@AuthenticationPrincipal UserDetails details, @Validated @RequestBody Recipes recipe) {
+    public Map<String, Long> postRecipes(@AuthenticationPrincipal UserDetails details,
+                                         @Validated @RequestBody Recipes recipe) {
         recipesService.saveToRepository(recipe.getName(), recipe.getDescription(),
                 recipe.getCategory(), LocalDateTime.now(),
                 recipe.getIngredients(), recipe.getDirections(), details.getUsername());
@@ -43,7 +44,8 @@ public class RecipesController {
     }
 
     @DeleteMapping("/api/recipe/{id}")
-    public ResponseEntity<?> deleteRecipes(@AuthenticationPrincipal UserDetails details, @PathVariable long id) {
+    public ResponseEntity<?> deleteRecipes(@AuthenticationPrincipal UserDetails details,
+                                           @PathVariable long id) {
         if (recipesService.getRecipesById(id).getStatusCode() == HttpStatus.OK) {
             Recipes recipes = recipesService.repository.findById(id).get();
             if (recipes.getEmail().equals(details.getUsername())) {
@@ -59,7 +61,8 @@ public class RecipesController {
 
 
     @PutMapping("/api/recipe/{id}")
-    public ResponseEntity<?> putRecipes(@AuthenticationPrincipal UserDetails details, @PathVariable long id, @Validated @RequestBody Recipes recipe) {
+    public ResponseEntity<?> putRecipes(@AuthenticationPrincipal UserDetails details,
+                                        @PathVariable long id, @Validated @RequestBody Recipes recipe) {
         try {
             Recipes recipes = recipesService.repository.findById(id).get();
             if (recipes.getEmail().equals(details.getUsername())) {
